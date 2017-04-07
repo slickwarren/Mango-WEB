@@ -1,0 +1,8 @@
+Genereal Tutorials: https://unity3d.com/learn/tutorials
+
+Mobile Controls: https://unity3d.com/learn/tutorials/projects/2d-roguelike-tutorial/adding-mobile-controls
+
+Mobile 'swipe and tap': https://forum.unity3d.com/threads/swipe-in-all-directions-touch-and-mouse.165416/
+                      : http://answers.unity3d.com/questions/600148/detect-swipe-in-four-directions-android.html
+                      
+Please enter more help here as we find them!
