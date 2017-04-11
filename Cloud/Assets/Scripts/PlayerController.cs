@@ -10,13 +10,13 @@ public class PlayerController : MonoBehaviour {
 
 	// instance variables
 	public float speed = 5.0f;
-
+	private CharacterController control;
 
 	// functions
 
 	// Use this for initialization
 	void Start () {
-	
+		control = GetComponent<CharacterController> ();
 	}
 
 
@@ -25,19 +25,19 @@ public class PlayerController : MonoBehaviour {
 
 		// move right
 		if (Input.GetKey (KeyCode.RightArrow)) {
-			transform.Translate (new Vector3 (speed * Time.deltaTime, 0f, 0f));
+			control.SimpleMove(new Vector3 (speed * Time.deltaTime, 0f, 0f));
 		}
 		// move left
 		if (Input.GetKey (KeyCode.LeftArrow)) { 
-			transform.Translate (new Vector3 (-speed * Time.deltaTime, 0f, 0f));
+			control.SimpleMove(new Vector3 (-speed * Time.deltaTime, 0f, 0f));
 		}
 		// move 'up' - away from camera
 		if (Input.GetKey (KeyCode.UpArrow)) { 
-			transform.Translate (new Vector3 (0f, 0f, speed * Time.deltaTime));
+			control.SimpleMove(new Vector3 (0f, 0f, speed * Time.deltaTime));
 		}
 		// move 'down' - away from camera
 		if (Input.GetKey (KeyCode.DownArrow)) {
-			transform.Translate (new Vector3 (0f, 0f, -speed * Time.deltaTime));
+			control.SimpleMove(new Vector3 (0f, 0f, -speed * Time.deltaTime));
 		}
 	}
 }
