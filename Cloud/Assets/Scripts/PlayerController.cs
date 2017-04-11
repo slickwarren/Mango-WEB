@@ -9,7 +9,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	// instance variables
-	public float speed = 5.0f;
+	public float speed = 5f;
 	private CharacterController control;
 
 	// functions
