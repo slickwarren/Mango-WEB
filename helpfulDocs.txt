@@ -6,3 +6,5 @@ Mobile 'swipe and tap': https://forum.unity3d.com/threads/swipe-in-all-direction
                       : http://answers.unity3d.com/questions/600148/detect-swipe-in-four-directions-android.html
                       
 Please enter more help here as we find them!
+
+Build to iOS guide: https://unity3d.com/learn/tutorials/topics/mobile-touch/building-your-unity-game-ios-device-testing
