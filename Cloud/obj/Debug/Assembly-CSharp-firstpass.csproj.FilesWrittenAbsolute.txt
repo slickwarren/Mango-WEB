@@ -16,3 +16,7 @@
 /Users/julianbertini/Desktop/Mango-WEB/Cloud/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/julianbertini/Desktop/Mango-WEB/Cloud/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/julianbertini/Desktop/Mango-WEB/Cloud/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/julianbertini/Desktop/Mango-WEB/Cloud/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb
+/Users/julianbertini/Desktop/Mango-WEB/Cloud/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Users/julianbertini/Desktop/Mango-WEB/Cloud/obj/Debug/Assembly-CSharp-firstpass.dll
+/Users/julianbertini/Desktop/Mango-WEB/Cloud/obj/Debug/Assembly-CSharp-firstpass.dll.mdb
