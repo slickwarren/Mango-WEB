@@ -70,6 +70,15 @@ public class PerpendicularMovement : MonoBehaviour {
 		
 		myRb.constraints = RigidbodyConstraints.None;
 
+//		float xAngle = Mathf.Acos (Vector3.Dot (localVerticalAxis, transform.right) / 
+//			(localVerticalAxis.magnitude * transform.right.magnitude));
+//		float yAngle = Mathf.Acos (Vector3.Dot (localVerticalAxis, transform.up) / 
+//			(localVerticalAxis.magnitude * transform.up.magnitude));
+//		float zAngle = Mathf.Acos (Vector3.Dot (localVerticalAxis, transform.forward) / 
+//			(localVerticalAxis.magnitude * transform.forward.magnitude));
+
+		//Debug.Log ("xAngle = " + xAngle + ", yAngle = " + yAngle + ", zAngle = " + zAngle);
+
 		if (localVerticalAxis == transform.right) {
 			myRb.constraints = RigidbodyConstraints.FreezeRotationX;
 		} else if (localVerticalAxis == transform.up) {
@@ -78,4 +87,6 @@ public class PerpendicularMovement : MonoBehaviour {
 			myRb.constraints = RigidbodyConstraints.FreezeRotationZ;
 		}
 	}
+
+
 }
