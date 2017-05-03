@@ -10,11 +10,13 @@ using System.Collections;
  * face on which it experiences a collision.
  * License: None.
  * Updates:
+ * -5/2/17 - changed world axis name to indicate constant, commented changeRotationConstraint() function
+ * 		   - wrote updateAxisAngles() function, changed Update() to use that function
  */
 public class PerpendicularMovement : MonoBehaviour {
 
 	// instance variables
-	private Vector3 worldVerticalAxis;
+	private Vector3 WORLD_VERTICAL;
 	private Vector3 localVerticalAxis;
 	private Rigidbody myRb;
 
@@ -25,7 +27,7 @@ public class PerpendicularMovement : MonoBehaviour {
 	void Start () {
 		myRb = GetComponent<Rigidbody> ();
 		transform.hasChanged = false;
-		worldVerticalAxis = new Vector3 (0f, 1f, 0f);
+		WORLD_VERTICAL = new Vector3 (0f, 1f, 0f);
 		updateLocalVertical ();
 		changeRotationConstraint ();
 	}
@@ -34,8 +36,9 @@ public class PerpendicularMovement : MonoBehaviour {
 	 */
 	void Update () {
 		if (transform.hasChanged) {
-			updateLocalVertical ();
-			changeRotationConstraint ();
+			//updateLocalVertical ();
+			//changeRotationConstraint ();
+			updateAxisAngles();
 		}
 	}
 
@@ -46,12 +49,14 @@ public class PerpendicularMovement : MonoBehaviour {
 
 		//Debug.Log ("Method Called");
 
-		Vector3 xPerp = Vector3.Cross (worldVerticalAxis, transform.right);
-		Vector3 yPerp = Vector3.Cross (worldVerticalAxis, transform.up);
-		Vector3 zPerp = Vector3.Cross (worldVerticalAxis, transform.forward);
+		// calculate cross-product vectors
+		Vector3 xPerp = Vector3.Cross (WORLD_VERTICAL, transform.right);
+		Vector3 yPerp = Vector3.Cross (WORLD_VERTICAL, transform.up);
+		Vector3 zPerp = Vector3.Cross (WORLD_VERTICAL, transform.forward);
 
 		//Debug.Log ("xMag = " + xPerp.magnitude + ", yMag = " + yPerp.magnitude + ", zMag = " + zPerp.magnitude);
 
+		// vector with magnitude near zero is parallel to world vertical axis
 		if (xPerp.magnitude <= threshold) {
 			localVerticalAxis = transform.right;
 			//Debug.Log ("Local vertical axis is X");
@@ -63,19 +68,50 @@ public class PerpendicularMovement : MonoBehaviour {
 			//Debug.Log("Local vertical axis is Z");
 		}
 
-		transform.hasChanged = false;
+		transform.hasChanged = false; // trip flag
 	}
 
+	/** limits object rotation to around axes within some threshold difference from the world horizontal axis
+	 * 
+	 * calculates angle between world vertical axis and each local axis
+	 * locks rotation about local axis that isn't within threshold of perpendicular from world vertical axis
+	 */
+	void updateAxisAngles(){
+
+		myRb.constraints = RigidbodyConstraints.None; // release rotation constraints
+
+		// calculate angle between local axes and world vertical axis
+		float xAngle = Mathf.Acos (Vector3.Dot (WORLD_VERTICAL, transform.right) / 
+			(localVerticalAxis.magnitude * transform.right.magnitude));
+		float yAngle = Mathf.Acos (Vector3.Dot (WORLD_VERTICAL, transform.up) / 
+			(localVerticalAxis.magnitude * transform.up.magnitude));
+		float zAngle = Mathf.Acos (Vector3.Dot (WORLD_VERTICAL, transform.forward) / 
+			(localVerticalAxis.magnitude * transform.forward.magnitude));
+
+		Debug.Log ("xAngle = " + xAngle + ", yAngle = " + yAngle + ", zAngle = " + zAngle);
+
+		//
+		if (Mathf.Abs(xAngle - (Mathf.PI / 2)) >= threshold) {
+			myRb.constraints = RigidbodyConstraints.FreezeRotationX;
+		}
+		if (Mathf.Abs(yAngle - (Mathf.PI / 2)) >= threshold) {
+			myRb.constraints = RigidbodyConstraints.FreezeRotationY;
+		}
+		if (Mathf.Abs(zAngle - (Mathf.PI / 2)) >= threshold) {
+			myRb.constraints = RigidbodyConstraints.FreezeRotationZ;
+		}
+
+		transform.hasChanged = false; // trip flag
+	}
+
+	/** freezes rotation about local axes depending on which local axis points world vertical
+	 * 
+	 * reads which local axis is designated as parallel to world vertical
+	 * freezes rotation around that axis and releases rotation about all other local axes
+	 */
 	void changeRotationConstraint(){
 		
-		myRb.constraints = RigidbodyConstraints.None;
-
-//		float xAngle = Mathf.Acos (Vector3.Dot (localVerticalAxis, transform.right) / 
-//			(localVerticalAxis.magnitude * transform.right.magnitude));
-//		float yAngle = Mathf.Acos (Vector3.Dot (localVerticalAxis, transform.up) / 
-//			(localVerticalAxis.magnitude * transform.up.magnitude));
-//		float zAngle = Mathf.Acos (Vector3.Dot (localVerticalAxis, transform.forward) / 
-//			(localVerticalAxis.magnitude * transform.forward.magnitude));
+		myRb.constraints = RigidbodyConstraints.None; // release rotation constraints
 
 		//Debug.Log ("xAngle = " + xAngle + ", yAngle = " + yAngle + ", zAngle = " + zAngle);
 
