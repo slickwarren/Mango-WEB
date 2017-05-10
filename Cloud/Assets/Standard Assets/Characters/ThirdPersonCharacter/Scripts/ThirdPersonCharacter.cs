@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
 	[RequireComponent(typeof(Rigidbody))]
@@ -28,6 +28,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
 		bool m_Crouching;
+		private int count;
+		public Text countText;
 
 
 		void Start()
@@ -40,6 +42,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
+			countText.text = "Points: " + count.ToString ();
 		}
 
 
@@ -224,6 +227,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		void OnTriggerEnter(Collider other) {
 			if (other.gameObject.CompareTag("pickup")) {
 				other.gameObject.SetActive (false);
+				count = count + 1;
+				countText.text = "Points: " + count.ToString ();
 			}
 		}
 	}
